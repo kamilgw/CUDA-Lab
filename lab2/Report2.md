@@ -22,9 +22,15 @@ each block *cudaCoresPerMP* number of threads to execute our kernel function.
 
 ## Limiting factors
 Our next task was to found the limitations of *addVec* code. We checked how many elements can be processed using this code.
-So we started increasing the numElements in vector until our program crash. We found that program working with 10e8 but crashed
-with 10e9. In each array we are using float number so for each number it is 4 bytes in memory. We can simply calculate the sie of used memory.
+So we started increasing the numElements in vector until our program crash. We found that program working with 5*10e7 but crashed
+with 6\*10e7. In each array we are using float number so for each number it is 4 bytes in memory. We can simply calculate the sie of used memory.
 
 ```math #sum
-size = 3 * 10e8 * 4 bytes
+size = 3 * 5 * 10e7 * 4 bytes = 6 GB
 ```
+## Time comparison
+After that we started to measure the execution time of our code. We added some code which add vectors using CPU. We made a few measurements for various input vector size.   
+![Compare CPU and CUDA](times.jpg)
+On the first plot we can see that execution time on CUDA is constant in contrast to CPU where time increase linearly. But if we look closer on the cases where the vector size is smaller than 10000.
+![Compare CPU and CUDA](times1.jpg)
+We can see that prepare GPU to work costs about 10ms so CUDA cores are faster than CPU only if we are adding vectors larger than ~5000 elements. So if we want to add vectors that have a few elements a better choice might be to use CPU.
