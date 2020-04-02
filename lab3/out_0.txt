@@ -1,0 +1,95 @@
+Case elements: 4
+Fill matrices
+1 blocks of 4 threads
+Done
+Fill matrices
+(1,1) blocks of (4) threads
+Done
+Fill matrices
+(1,1) blocks of (2,2) threads
+Done
+Fill matrices
+Case elements: 16
+Fill matrices
+1 blocks of 16 threads
+Done
+Fill matrices
+(2,2) blocks of (4) threads
+Done
+Fill matrices
+(2,2) blocks of (2,2) threads
+Done
+Fill matrices
+Case elements: 64
+Fill matrices
+1 blocks of 64 threads
+Done
+Fill matrices
+(2,2) blocks of (16) threads
+Done
+Fill matrices
+(2,2) blocks of (4,4) threads
+Done
+Fill matrices
+Case elements: 256
+Fill matrices
+1 blocks of 256 threads
+Done
+Fill matrices
+(4,4) blocks of (16) threads
+Done
+Fill matrices
+(4,4) blocks of (4,4) threads
+Done
+Fill matrices
+Case elements: 1024
+Fill matrices
+1 blocks of 1024 threads
+Done
+Fill matrices
+(8,8) blocks of (16) threads
+Done
+Fill matrices
+(8,8) blocks of (4,4) threads
+Done
+Fill matrices
+Case elements: 4096
+Fill matrices
+(8,8) blocks of (64) threads
+Done
+Fill matrices
+(8,8) blocks of (8,8) threads
+Done
+Fill matrices
+Case elements: 16384
+Fill matrices
+(16,16) blocks of (64) threads
+Done
+Fill matrices
+(16,16) blocks of (8,8) threads
+Done
+Fill matrices
+Case elements: 65536
+Fill matrices
+(16,16) blocks of (256) threads
+Done
+Fill matrices
+(16,16) blocks of (16,16) threads
+Done
+Fill matrices
+Case elements: 262144
+Fill matrices
+(32,32) blocks of (256) threads
+Done
+Fill matrices
+(32,32) blocks of (16,16) threads
+Done
+Fill matrices
+Case elements: 1048576
+Fill matrices
+(32,32) blocks of (1024) threads
+Done
+Fill matrices
+(32,32) blocks of (32,32) threads
+Done
+Fill matrices
