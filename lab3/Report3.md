@@ -24,11 +24,14 @@ The first approach quite quickly showed error about invalid CUDA kernel argument
 
 The second and the third approach showed almost same performance. Worthy to mention is that the third approach has at the begining slighlty better performance. However what is important about it, it is the most human-friendly approach among all described, beacuse the layout of threads can be drawn the same way the matrix would be. Grid layout and matrix' cells covers in that case.
 
-In the end the linear calculation on single CPU thread appeard to be more efficient for matrices which size is quite small, on the hardware we were using the size was about 37.
+In the end the linear calculation on single CPU thread appeard to be more efficient for matrices which size is quite small, on the hardware we were using that size was about 37.
 
 ## Time comparison
-After that we started to measure the execution time of our code. We added some code which add vectors using CPU. We made a few measurements for various input vector size.   
+On the chart below it is clear that the fourth approach is the slowest one. Interesting fact is that the matrix addition algoritm has a linear complexity, therefore the cure "cell after cell CPU" suppose to be a stright line. However it appears to be polynomial. That might be the result of the delay of read write cycles to operation memory which might increase alongisde the size of data. The first approach, which is represented by "1D1D CUDA" curve has a wierd performance drop for a very small matrix, however it looks more like delay caused by hardawre negotioation and data exchange, as it the first task to be executed in the program.
 ![Compare CPU and CUDA](Chart3.png)
-On the first plot we can see that execution time on CUDA is constant in contrast to CPU where time increase linearly. But if we look closer on the cases where the vector size is smaller than 10000.
+
+Over a million elements matrices were handled in the second and the third approach better than 4 elements.
 ![Compare CPU and CUDA](Chart4.png)
-We can see that prepare GPU to work costs about 10ms so CUDA cores are faster than CPU only if we are adding vectors larger than ~5000 elements. So if we want to add vectors that have a few elements a better choice might be to use CPU.
+
+## Conclusion
+It appears that GPU shows slightly better performance for multidemensional grid layout, however main issue that the second and the third approach solved was the restriction in number of the threads in single block.
