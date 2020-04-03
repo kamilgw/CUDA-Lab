@@ -30,7 +30,7 @@ size = 3 * 5 * 10e7 * 4 bytes = 6 GB
 ```
 ## Time comparison
 After that we started to measure the execution time of our code. We added some code which add vectors using CPU. We made a few measurements for various input vector size.   
-![Compare CPU and CUDA](lab2/times.jpg)
+![Compare CPU and CUDA](../lab2/times.jpg)
 On the first plot we can see that execution time on CUDA is constant in contrast to CPU where time increase linearly. But if we look closer on the cases where the vector size is smaller than 10000.
-![Compare CPU and CUDA](lab2/times1.jpg)
+![Compare CPU and CUDA](../lab2/times1.jpg)
 We can see that prepare GPU to work costs about 10ms so CUDA cores are faster than CPU only if we are adding vectors larger than ~5000 elements. So if we want to add vectors that have a few elements a better choice might be to use CPU.
