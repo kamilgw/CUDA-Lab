@@ -28,10 +28,10 @@ In the end the linear calculation on single CPU thread appeard to be more effici
 
 ## Time comparison
 On the chart below it is clear that the fourth approach is the slowest one. Interesting fact is that the matrix addition algoritm has a linear complexity, therefore the cure "cell after cell CPU" suppose to be a stright line. However it appears to be polynomial. That might be the result of the delay of read write cycles to operation memory which might increase alongisde the size of data. The first approach, which is represented by "1D1D CUDA" curve has a wierd performance drop for a very small matrix, however it looks more like delay caused by hardawre negotioation and data exchange, as it the first task to be executed in the program.
-![Compare CPU and CUDA](Chart3.png)
+![Compare CPU and CUDA](Chart3.PNG)
 
 Over a million elements matrices were handled in the second and the third approach better than 4 elements.
-![Compare CPU and CUDA](Chart4.png)
+![Compare CPU and CUDA](Chart4.PNG)
 
 ## Conclusion
 It appears that GPU shows slightly better performance for multidemensional grid layout, however main issue that the second and the third approach solved was the restriction in number of the threads in single block.
