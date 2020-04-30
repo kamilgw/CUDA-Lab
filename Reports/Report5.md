@@ -2,6 +2,33 @@
 
 Kamil Gwiżdż & Bartłomiej Mucha
 
+## Unified memory
+Unified Memory is a single memory address space accessible from any processor in a system. This allows appliciations to allocate data from code running on CPUs or GPUs. If we want to allocating Unified Memory we can easily calls to ```cudaMallocManaged()``` an allocation function. ....................... Write something about page faults 
+..............................
+
+**CPU only**
+```bash
+==573== Unified Memory profiling result:
+Total CPU Page faults: 384
+```
+
+**GPU only**
+```bash
+==1483== Unified Memory profiling result:
+Device "GeForce RTX 2060 (0)"
+   Count  Avg Size  Min Size  Max Size  Total Size  Total Time  Name
+     574         -         -         -           -  26.55216ms  Gpu page fault groups
+```
+
+**CPU->GPU**
+```bash
+==2034== Unified Memory profiling result:
+Device "GeForce RTX 2060 (0)"
+   Count  Avg Size  Min Size  Max Size  Total Size  Total Time  Name
+    6301  20.802KB  4.0000KB  128.00KB  128.0000MB  19.99347ms  Host To Device
+     578         -         -         -           -  74.12842ms  Gpu page fault groups
+Total CPU Page faults: 384
+```
 ## Prefetching technique
 
 This all about move the data to the GPU after initializiang it. We can do it on CUDA with ```cudaMemPrefetchAsync()```.
