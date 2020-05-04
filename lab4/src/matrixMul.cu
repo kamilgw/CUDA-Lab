@@ -30,7 +30,6 @@ __global__ void matrixMultiplication(const double *A, const double *B, double *C
 }
 
 
-// Check if it works
 __global__ void strideMatrixMultiplication(const double * const A, const double* const B, double* const C, int size){
     int rowIdx = blockIdx.y * blockDim.y + threadIdx.y;
     int colIdx = blockIdx.x * blockDim.x + threadIdx.x;
@@ -77,23 +76,6 @@ void initializeMatrix(double *A, unsigned long numberOfAllElements){
         A[i] = rand()/(double)RAND_MAX;
     }
 }
-
-// void allocateHost(double** A, const size_t size) {
-//     *A = (double*) malloc(size);
-
-//     if(A == nullptr) {
-//         std::cout << "Can not allocate host memory" << std::endl;
-//         exit(0);
-//     }
-// }
-
-// void allocateDevice(double * A, size_t size) {
-//     checkCuda(cudaMalloc((void**)A, size));
-// }
-
-// void freeDevice(double *A) {
-//     checkCuda(cudaFree(A));
-// }
 
 void printMatrix(double * A, unsigned long N, unsigned long M) {
     for(int i = 0; i < N; i++) {
@@ -291,10 +273,4 @@ int main() {
     }
 
     save.close();
-
-
-    numberOfElementsInDim = startnum;
-    numberOfElements = numberOfElementsInDim * numberOfElementsInDim;
-    size = numberOfElements * sizeof(double);
-
 }
