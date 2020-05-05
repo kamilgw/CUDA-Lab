@@ -12,16 +12,20 @@ Two methods were implemented. The first one is straight-forward approach, where 
 ## Memory managment
 Two memory managemant models were used in the methods.  
 - device and host arrays are allocated are separated
+<div align="center">
 
 **32x32 device <-> host memory management**
+</div>
 ```shell
             Type  Time(%)      Time     Calls       Avg       Min       Max  Name
  GPU activities:   48.06%  182.824s        70  2.61177s  104.12us  10.2201s  matrixMultiplication(double const *, double const *, double*, int)
                    47.99%  182.542s        70  2.60775s  103.84us  10.1987s  strideMatrixMultiplication(double const *, double const *, double*, int)
 ```
 - arrays are allocated in unified memory, which from user perspective looks like it is shared by both device and host. In fact memory is allocated in both device and host but a background process synchronize them.
+<div align="center">
 
 **32x32 device <-> managed memory**
+</div>
 ```shell
             Type  Time(%)      Time     Calls       Avg       Min       Max  Name
  GPU activities:   48.06%  183.560s        70  2.62229s  104.51us  10.2285s  matrixMultiplication(double const *, double const *, double*, int)
