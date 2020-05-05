@@ -30,6 +30,7 @@ __global__ void matrixMultiplication(const double *A, const double *B, double *C
 }
 
 
+// Check if it works
 __global__ void strideMatrixMultiplication(const double * const A, const double* const B, double* const C, int size){
     int rowIdx = blockIdx.y * blockDim.y + threadIdx.y;
     int colIdx = blockIdx.x * blockDim.x + threadIdx.x;
@@ -77,6 +78,23 @@ void initializeMatrix(double *A, unsigned long numberOfAllElements){
     }
 }
 
+// void allocateHost(double** A, const size_t size) {
+//     *A = (double*) malloc(size);
+
+//     if(A == nullptr) {
+//         std::cout << "Can not allocate host memory" << std::endl;
+//         exit(0);
+//     }
+// }
+
+// void allocateDevice(double * A, size_t size) {
+//     checkCuda(cudaMalloc((void**)A, size));
+// }
+
+// void freeDevice(double *A) {
+//     checkCuda(cudaFree(A));
+// }
+
 void printMatrix(double * A, unsigned long N, unsigned long M) {
     for(int i = 0; i < N; i++) {
         for(int j = 0; j < M; j++)
@@ -102,16 +120,35 @@ void initWith(const T num, T * const a, const int N)
     }
 }
 
+#define DIM1 32
+#define DIM2 32
+// # operator doesn't work :(
+#define sDIM1 "32"
+#define sDIM2 "32"
 #define VALIDATE 0
+#define MANAGED 1
+#define DEVICE_HOST 0
+
+#define SPEC ""
+#if MANAGED + DEVICE_HOST == 1
+    #if MANAGED
+        #undef SPEC
+        #define SPEC "managed_only"
+    #else
+        #undef SPEC
+        #define SPEC "dev_host_only"
+    #endif
+#endif
+
 
 int main() {
     double *host_A, *host_B, *host_result_CPU, *host_result_stride, *host_result;
     double *dev_A, *dev_B, *dev_result, *dev_result_stride;
     double *A, *B, *result, *result_stride;
     int deviceId;
-
+    const char * const filename = "out" sDIM1 "_" sDIM2 "_" SPEC ".csv";
     std::ofstream save;
-    save.open("out32_32.csv");
+    save.open(filename);
 
     int numberOfElementsInDim;
     int numberOfElements;
@@ -177,75 +214,91 @@ int main() {
             #if VALIDATE
             cpuMatrixMultiplication(host_A, host_B, host_result_CPU, numberOfElementsInDim);
             #endif
-            dim3 threads_per_block (32, 32, 1);
+            dim3 threads_per_block (DIM1, DIM2, 1);
             dim3 number_of_blocks ((numberOfElementsInDim / threads_per_block.x) + 1, (numberOfElementsInDim / threads_per_block.y) + 1, 1);
 
-            start = std::chrono::high_resolution_clock::now();
-            matrixMultiplication<<<number_of_blocks, threads_per_block>>>(dev_A, dev_B, dev_result, numberOfElementsInDim);
-            cudaDeviceSynchronize();
-            stop = std::chrono::high_resolution_clock::now();
-            auto elapsed_time = duration_cast<microseconds>(stop - start);
-            time += elapsed_time.count();
-            checkCuda(cudaMemcpy( host_result, dev_result, size, cudaMemcpyDeviceToHost));
-            #if VALIDATE
-            try{
-                validateMatrix(host_result_CPU, host_result, numberOfElements);
-            }
-            catch(const char* const e)
+            #if DEVICE_HOST
             {
-                std::cout<<e<<std::endl;
+                start = std::chrono::high_resolution_clock::now();
+                matrixMultiplication<<<number_of_blocks, threads_per_block>>>(dev_A, dev_B, dev_result, numberOfElementsInDim);
+                cudaDeviceSynchronize();
+                stop = std::chrono::high_resolution_clock::now();
+                auto elapsed_time = duration_cast<microseconds>(stop - start);
+                time += elapsed_time.count();
+                checkCuda(cudaMemcpy( host_result, dev_result, size, cudaMemcpyDeviceToHost));
+                #if VALIDATE
+                try{
+                    validateMatrix(host_result_CPU, host_result, numberOfElements);
+                }
+                catch(const char* const e)
+                {
+                    std::cout<<e<<std::endl;
+                }
+                #endif
             }
             #endif
             checkCuda(cudaFree(dev_result));
 
-            start = std::chrono::high_resolution_clock::now();
-            strideMatrixMultiplication<<<number_of_blocks, threads_per_block>>>(dev_A, dev_B, dev_result_stride, numberOfElementsInDim);
-            cudaDeviceSynchronize();
-            stop = std::chrono::high_resolution_clock::now();
-            elapsed_time = duration_cast<microseconds>(stop - start);
-            timeStride += elapsed_time.count();
-            checkCuda(cudaMemcpy( host_result_stride, dev_result_stride, size, cudaMemcpyDeviceToHost));
-            #if VALIDATE
-            try{
-                validateMatrix(host_result_CPU, host_result_stride, numberOfElements);
-            }
-            catch(const char* const e)
+            #if DEVICE_HOST
             {
-                std::cout<<e<<std::endl;
+                start = std::chrono::high_resolution_clock::now();
+                strideMatrixMultiplication<<<number_of_blocks, threads_per_block>>>(dev_A, dev_B, dev_result_stride, numberOfElementsInDim);
+                cudaDeviceSynchronize();
+                stop = std::chrono::high_resolution_clock::now();
+                auto elapsed_time = duration_cast<microseconds>(stop - start);
+                timeStride += elapsed_time.count();
+                checkCuda(cudaMemcpy( host_result_stride, dev_result_stride, size, cudaMemcpyDeviceToHost));
+                #if VALIDATE
+                try{
+                    validateMatrix(host_result_CPU, host_result_stride, numberOfElements);
+                }
+                catch(const char* const e)
+                {
+                    std::cout<<e<<std::endl;
+                }
+                #endif
             }
             #endif
             checkCuda(cudaFree(dev_result_stride));
 
-            start = std::chrono::high_resolution_clock::now();
-            matrixMultiplication<<<number_of_blocks, threads_per_block>>>(A, B, result, numberOfElementsInDim);
-            cudaDeviceSynchronize();
-            stop = std::chrono::high_resolution_clock::now();
-            elapsed_time = duration_cast<microseconds>(stop - start);
-            timeManaged += elapsed_time.count();
-            #if VALIDATE
-            try{
-                validateMatrix(host_result_CPU, result, numberOfElements);
-            }
-            catch(const char* const e)
+            #if MANAGED
             {
-                std::cout<<e<<std::endl;
+                start = std::chrono::high_resolution_clock::now();
+                matrixMultiplication<<<number_of_blocks, threads_per_block>>>(A, B, result, numberOfElementsInDim);
+                cudaDeviceSynchronize();
+                stop = std::chrono::high_resolution_clock::now();
+                auto elapsed_time = duration_cast<microseconds>(stop - start);
+                timeManaged += elapsed_time.count();
+                #if VALIDATE
+                try{
+                    validateMatrix(host_result_CPU, result, numberOfElements);
+                }
+                catch(const char* const e)
+                {
+                    std::cout<<e<<std::endl;
+                }
+                #endif
             }
             #endif
             checkCuda(cudaFree(result));
 
-            start = std::chrono::high_resolution_clock::now();
-            strideMatrixMultiplication<<<number_of_blocks, threads_per_block>>>(A, B, result_stride, numberOfElementsInDim);
-            cudaDeviceSynchronize();
-            stop = std::chrono::high_resolution_clock::now();
-            elapsed_time = duration_cast<microseconds>(stop - start);
-            timeStrideManaged += elapsed_time.count();
-            #if VALIDATE
-            try{
-                validateMatrix(host_result_CPU, result_stride, numberOfElements);
-            }
-            catch(const char* const e)
+            #if MANAGED
             {
-                std::cout<<e<<std::endl;
+                start = std::chrono::high_resolution_clock::now();
+                strideMatrixMultiplication<<<number_of_blocks, threads_per_block>>>(A, B, result_stride, numberOfElementsInDim);
+                cudaDeviceSynchronize();
+                stop = std::chrono::high_resolution_clock::now();
+                auto elapsed_time = duration_cast<microseconds>(stop - start);
+                timeStrideManaged += elapsed_time.count();
+                #if VALIDATE
+                try{
+                    validateMatrix(host_result_CPU, result_stride, numberOfElements);
+                }
+                catch(const char* const e)
+                {
+                    std::cout<<e<<std::endl;
+                }
+                #endif
             }
             #endif
             checkCuda(cudaFree(result_stride));
@@ -273,4 +326,10 @@ int main() {
     }
 
     save.close();
+
+
+    numberOfElementsInDim = startnum;
+    numberOfElements = numberOfElementsInDim * numberOfElementsInDim;
+    size = numberOfElements * sizeof(double);
+
 }
