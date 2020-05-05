@@ -55,41 +55,33 @@ The unified memory seems to be slighlty slower, however the differences are clos
 Data above clearly proofs that using odd number for a block layout is leading far from optimization. That also shows the more data is processed in single block, the faster execution is.
 
 ## Time comparison
-
-![Compare CPU and CUDA](../lab4/AllLayoutsAverage.PNG)
 <div align="center">
 
 ### Graph 1. Average time of execution for block layout 3x7, 10x10, 32x32
-
-
 </div>
 
+![Compare CPU and CUDA](../lab4/AllLayoutsAverage.PNG)
 
-![Compare CPU and CUDA](../lab4/3x7layout.PNG)
 <div align="center">
 
 ### Graph 2. Time of execution for block layout 3x7
-
-
 </div>
 
+![Compare CPU and CUDA](../lab4/3x7layout.PNG)
 
-![Compare CPU and CUDA](../lab4/10x10layout.PNG)
 <div align="center">
 
 ### Graph 3. Time of execution for block layout 10x10
-
-
 </div>
 
+![Compare CPU and CUDA](../lab4/10x10layout.PNG)
 
-![Compare CPU and CUDA](../lab4/32x32layout.PNG)
 <div align="center">
 
 ### Graph 4. Time of execution for block layout 32x32
-
-
 </div>
+
+![Compare CPU and CUDA](../lab4/32x32layout.PNG)
 
 Interesting fact is that for matrix' of size 800 and 900 in case of any layout the time of exection is not as differnet as the polynomial trend for other sizes.
 
