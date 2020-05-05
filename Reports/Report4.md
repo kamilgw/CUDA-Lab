@@ -62,17 +62,20 @@ Data above clearly proofs that using odd number for a block layout is leading fa
 ### Graph 1. Average time of execution for block layout 3x7, 10x10, 32x32
 </div>
 
+
 ![Compare CPU and CUDA](../lab4/3x7layout.PNG)
 <div align="center">
 
 ### Graph 2. Time of execution for block layout 3x7
 </div>
 
+
 ![Compare CPU and CUDA](../lab4/10x10layout.PNG)
 <div align="center">
 
 ### Graph 3. Time of execution for block layout 10x10
 </div>
+
 
 ![Compare CPU and CUDA](../lab4/32x32layout.PNG)
 <div align="center">
