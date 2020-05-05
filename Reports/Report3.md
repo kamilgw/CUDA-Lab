@@ -30,7 +30,7 @@ In the end the linear calculation on single CPU thread appeard to be more effici
 As the full size graph shows barely anything the second one is a snippet in smaller scale. On the chart below it is clear that the fourth approach is the slowest one. Interesting fact is that the matrix addition algoritm has a square complexity, therefore the curve "cell after cell CPU" suppose to be a squre function curve. However it did not apper to be exactly square, more like polynomial. We can find explanation in the functionality of hardware and low level divers. As it might be a result of the delay of read-write cycles to operation memory, which might increase alongisde the size of data. The first approach, which is represented by "1D1D CUDA" curve has a wierd performance drop for a very small matrix, however it looks more like delay caused by hardawre negotioation and data exchange, as it the first task to be executed in the program.
 ![Compare CPU and CUDA](../lab3/Chart3.PNG)
 
-Over a million elements matrices were handled in the second and the third approach better than 4 elements.
+Over a million elements matrices were handled in the second and the third approach better than 4 elements. The "1D1D CUDA" curve ends at matrix size value of 32, which makes a matrix size a one of 1024 elements. And that number is also the maximum number of threads per block.
 ![Compare CPU and CUDA](../lab3/Chart4.PNG)
 
 ## Conclusion
