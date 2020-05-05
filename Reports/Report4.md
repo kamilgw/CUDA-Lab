@@ -60,6 +60,8 @@ Data above clearly proofs that using odd number for a block layout is leading fa
 <div align="center">
 
 ### Graph 1. Average time of execution for block layout 3x7, 10x10, 32x32
+
+
 </div>
 
 
@@ -67,6 +69,8 @@ Data above clearly proofs that using odd number for a block layout is leading fa
 <div align="center">
 
 ### Graph 2. Time of execution for block layout 3x7
+
+
 </div>
 
 
@@ -74,6 +78,8 @@ Data above clearly proofs that using odd number for a block layout is leading fa
 <div align="center">
 
 ### Graph 3. Time of execution for block layout 10x10
+
+
 </div>
 
 
@@ -81,6 +87,8 @@ Data above clearly proofs that using odd number for a block layout is leading fa
 <div align="center">
 
 ### Graph 4. Time of execution for block layout 32x32
+
+
 </div>
 
 Interesting fact is that for matrix' of size 800 and 900 in case of any layout the time of exection is not as differnet as the polynomial trend for other sizes.
