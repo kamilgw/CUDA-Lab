@@ -16,6 +16,7 @@ Two memory managemant models were used in the methods.
 
 **32x32 device <-> host memory management**
 </div>
+
 ```shell
             Type  Time(%)      Time     Calls       Avg       Min       Max  Name
  GPU activities:   48.06%  182.824s        70  2.61177s  104.12us  10.2201s  matrixMultiplication(double const *, double const *, double*, int)
@@ -26,6 +27,7 @@ Two memory managemant models were used in the methods.
 
 **32x32 device <-> managed memory**
 </div>
+
 ```shell
             Type  Time(%)      Time     Calls       Avg       Min       Max  Name
  GPU activities:   48.06%  183.560s        70  2.62229s  104.51us  10.2285s  matrixMultiplication(double const *, double const *, double*, int)
@@ -55,13 +57,28 @@ Data above clearly proofs that using odd number for a block layout is leading fa
 ## Time comparison
 
 ![Compare CPU and CUDA](../lab4/AllLayoutsAverage.PNG)
+<div align="center">
+
 ### Graph 1. Average time of execution for block layout 3x7, 10x10, 32x32
+</div>
+
 ![Compare CPU and CUDA](../lab4/3x7layout.PNG)
+<div align="center">
+
 ### Graph 2. Time of execution for block layout 3x7
+</div>
+
 ![Compare CPU and CUDA](../lab4/10x10layout.PNG)
+<div align="center">
+
 ### Graph 3. Time of execution for block layout 10x10
+</div>
+
 ![Compare CPU and CUDA](../lab4/32x32layout.PNG)
+<div align="center">
+
 ### Graph 4. Time of execution for block layout 32x32
+</div>
 
 Interesting fact is that for matrix' of size 800 and 900 in case of any layout the time of exection is not as differnet as the polynomial trend for other sizes.
 
