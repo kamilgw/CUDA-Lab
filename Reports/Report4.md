@@ -12,6 +12,7 @@ Two methods were implemented. The first one is straight-forward approach, where 
 ## Memory managment
 Two memory managemant models were used in the methods.  
 - device and host arrays are allocated are separated
+
 **32x32 device <-> host memory management**
 ```shell
             Type  Time(%)      Time     Calls       Avg       Min       Max  Name
@@ -19,6 +20,7 @@ Two memory managemant models were used in the methods.
                    47.99%  182.542s        70  2.60775s  103.84us  10.1987s  strideMatrixMultiplication(double const *, double const *, double*, int)
 ```
 - arrays are allocated in unified memory, which from user perspective looks like it is shared by both device and host. In fact memory is allocated in both device and host but a background process synchronize them.
+
 **32x32 device <-> managed memory**
 ```shell
             Type  Time(%)      Time     Calls       Avg       Min       Max  Name
