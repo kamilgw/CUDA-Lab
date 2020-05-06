@@ -52,7 +52,7 @@ The unified memory seems to be slighlty slower, however the differences are clos
  GPU activities:   49.58%  993.457s       140  7.09612s  188.25us  27.6538s  strideMatrixMultiplication(double const *, double const *, double*, int)
                    49.54%  992.781s       140  7.09129s  188.18us  27.6171s  matrixMultiplication(double const *, double const *, double*, int)
 ```
-Data above clearly proofs that using odd number for a block layout is leading far from optimization. That also shows the more data is processed in single block, the faster execution is.
+Data above clearly proofs that using odd number for a block layout leads far from optimization. That also shows the more data is processed in single block, the faster execution is.
 
 ## Time comparison
 <div align="center">
@@ -83,7 +83,7 @@ Data above clearly proofs that using odd number for a block layout is leading fa
 
 ![Compare CPU and CUDA](../lab4/32x32layout.PNG)
 
-Interesting fact is that for matrix' of size 800 and 900 in case of any layout the time of exection is not as differnet as the polynomial trend for other sizes.
+Interesting fact is that for matrix' of size 800 and 900 in case of any layout the time of execution breaks from the polynomial trend.
 
 ## Conclusion
 
