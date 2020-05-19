@@ -2,6 +2,13 @@
 
 Kamil Gwiżdż & Bartłomiej Mucha
 
+## Device query
+The frist exercise was to inspect and compare device query code result from OpenCL and CUDA.
+The output from OpenCL C++ and C were the same. There was the basic informations about ours devices. When we looked into the source code we can see that the C++ code was ported to C.
+![OpenCL](../lab7/OpenCL.png)
+When we look at output from CUDA's DeviceQuery it has much more details about the device capabilities. 
+![CUDA](../lab7/CUDA.png)
+Comparing this two outputs we can see that there are some diffrents in names. What we have known as *Multiprocessors* in CUDA are named in OpenCL as *Compute Units*. *Max work-group Dims in OpenCL* is *Max dimension size of a thread block in CUDA*.   
 ## Vector addition example
 In the second task, we had to compare OpenCL implementations of vector addition in C and C++ , and then confront the results to CUDA implementation.
 First when we compare code in C and C++ we can see that the way of handling OpenCL kernel in C is a little messy. We think that this code could 
