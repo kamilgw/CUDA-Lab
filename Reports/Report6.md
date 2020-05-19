@@ -36,3 +36,5 @@ ensured use of prefetching technique. Time has reduced to **283us!!** So the nex
 would be to use 256 threads per block and 4096 blocks per grid. At the end we managed to reduce time to **64us**. This is not below 25us as we assumed at the beginning but when we
 compare this result to the result at the beginning we can say that this is huge performance improvement! 
 
+## Conclusions
+Adding streams without thinking about a problem is not the best solution. We should always prepare more then one possible implementation of a problem and then compare result to choose the best way. In our case adding streams did not give any positive results. When we look at our SAXPY problem after few optimizations  we have achieved a huge performance boost. We can see that the use of prefetching technique was of the greatest importance in this case. We also can not ignore the impact of threads per block and number of blocks because when we optimize it our result was about 5 time faster than without optimization. 
