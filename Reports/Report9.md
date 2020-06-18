@@ -76,10 +76,6 @@ Average time was 3.12 ms. Not as effective as before but noticeable improvement.
 ## Reduction 3
 First addition during load. Half of the threads are idle on first loop iteration so try to improve it.
 
-![Compare C and CPP](../lab7/C_CPP_2.png)
-![Compare C and CPP 2](../lab7/C_CPP_1.png)
-
-When we look at the chart it shows that C and C++ performance is quite similar. For smaller vectors C code may be slightly faster.
 Change this:
 ```cuda
 unsigned int i = blockIdx.x * blockDim.x + threadIdx.x;
