@@ -1,4 +1,4 @@
-# Report Lab7
+# Report Lab9
 
 Kamil Gwiżdż & Bartłomiej Mucha
 
@@ -60,7 +60,10 @@ Average time was 3.33 ms. Only few lines and the time improved by 1 ms, quite a 
 
 ## Reduction 2
 Sequential addressing we should get some improvement by removing unnecessary multiplication from for loop. Here is a image to illustrate how it works.
-
+# Interleaved addressing
+![Inter](../lab9/inter.png)
+# Sequential addressing
+![Sequential](../lab9/sequential.png)
 
 ```cuda
     for (unsigned int s=blockDim.x/2; s>0; s>>=1) {
